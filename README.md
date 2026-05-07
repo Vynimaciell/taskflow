@@ -1,144 +1,124 @@
 # 🗂️ TaskFlow — Kanban Task Manager
 
-A full-stack Kanban board application built with **Spring Boot**, **React**, and **MySQL**.
+Um gerenciador de tarefas estilo Kanban completo e profissional, com login, múltiplos projetos, dashboard com gráficos, tema claro/escuro e notificações de prazo.
 
 ![Java](https://img.shields.io/badge/Java-21-orange?logo=openjdk)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3-6DB33F?logo=springboot)
 ![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?logo=mysql)
+![Electron](https://img.shields.io/badge/Electron-31-47848F?logo=electron)
+![Vercel](https://img.shields.io/badge/Deploy-Vercel-000?logo=vercel)
 ![License](https://img.shields.io/badge/License-MIT-blue)
 
 ---
 
-## ✨ Features
+### 🌐 [Acessar online → taskflow-sepia-phi.vercel.app](https://taskflow-sepia-phi.vercel.app)
 
-- **Kanban Board** — Drag-and-drop tasks across TODO → In Progress → Review → Done
-- **JWT Authentication** — Secure register/login with token-based auth
-- **Task Management** — Full CRUD with priorities, tags, and ordering
-- **Filtering & Search** — Filter by status, priority, or tag; full-text search
-- **REST API** — Well-documented endpoints with Swagger/OpenAPI
-- **Responsive UI** — Clean dark theme with smooth animations
+### 💾 [Baixar instalador Windows (.exe)](https://github.com/Vynimaciell/taskflow/releases)
 
 ---
 
-## 🏗️ Architecture
+## ✨ Funcionalidades
+
+- **Quadro Kanban** — Arraste tarefas entre Pendência → Em andamento → Revisão → Feito
+- **Login e Cadastro** — Cada usuário tem sua conta com avatar personalizado
+- **Modo Demo** — Visitante explora projetos de exemplo sem precisar criar conta
+- **Múltiplos Projetos** — Crie projetos com nome, ícone e cor personalizada
+- **Dashboard** — Gráficos de progresso por status, prioridade, tags e anel de conclusão
+- **Prazos e Notificações** — Defina deadline nas tarefas e receba alertas de vencimento
+- **Tema Claro/Escuro** — Alterne com um clique no botão ☀️/🌙
+- **Filtros e Busca** — Filtre por prioridade, tag ou pesquise por texto
+- **Sidebar com Projetos** — Menu lateral listando todos os seus projetos
+- **App Desktop** — Disponível como instalador .exe para Windows via Electron
+
+---
+
+## 🚀 Como usar
+
+Você tem 3 formas de usar o TaskFlow:
+
+### Opção 1 — Pelo navegador (mais fácil)
+
+Acesse: **https://taskflow-sepia-phi.vercel.app**
+
+Não precisa instalar nada. Funciona em qualquer navegador.
+
+### Opção 2 — Instalador Windows (.exe)
+
+Baixe o arquivo `TaskFlow Setup 1.0.0.exe` na aba [Releases](https://github.com/Vynimaciell/taskflow/releases), execute e pronto. Não precisa de Node.js nem terminal.
+
+### Opção 3 — Rodar pelo código fonte
+
+**Pré-requisito:** Node.js 18+ instalado → [nodejs.org](https://nodejs.org)
+
+```bash
+git clone https://github.com/Vynimaciell/taskflow.git
+cd taskflow/frontend
+npm install
+npm run dev
+```
+
+Acesse: **http://localhost:5173**
+
+---
+
+## 🏗️ Arquitetura
 
 ```
 ┌──────────────┐     HTTP/JSON     ┌──────────────────┐     JPA      ┌─────────┐
 │  React SPA   │ ◄──────────────► │  Spring Boot API  │ ◄──────────► │  MySQL  │
 │  (Vite)      │                  │  (Port 8080)      │              │  (3306) │
 └──────────────┘                  └──────────────────┘              └─────────┘
-     :3000                         Security + JWT
+     :5173                         Security + JWT
+
+┌──────────────┐
+│  Electron    │ ← App desktop (.exe) empacotando o frontend
+└──────────────┘
 ```
 
 ---
 
-## 🚀 Quick Start
+## 📡 API Endpoints (Backend)
 
-### Prerequisites
-- Java 21+
-- Node.js 18+
-- MySQL 8+ (or use Docker)
-
-### Option 1: Docker (recommended)
-
-```bash
-git clone https://github.com/your-username/taskflow.git
-cd taskflow
-docker compose up -d
-```
-- API: http://localhost:8080
-- Swagger: http://localhost:8080/swagger-ui.html
-
-### Option 2: Manual Setup
-
-**Backend:**
-```bash
-cd backend
-# Configure MySQL in application.properties
-mvn spring-boot:run
-```
-
-**Frontend:**
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
----
-
-## 📡 API Endpoints
-
-| Method   | Endpoint              | Description          | Auth     |
+| Método   | Endpoint              | Descrição            | Auth     |
 |----------|-----------------------|----------------------|----------|
-| `POST`   | `/api/auth/register`  | Register new user    | No       |
-| `POST`   | `/api/auth/login`     | Login & get JWT      | No       |
-| `GET`    | `/api/tasks`          | List all tasks       | Required |
-| `GET`    | `/api/tasks/{id}`     | Get task by ID       | Required |
-| `POST`   | `/api/tasks`          | Create task          | Required |
-| `PUT`    | `/api/tasks/{id}`     | Update task          | Required |
-| `PATCH`  | `/api/tasks/{id}/move`| Move task (status)   | Required |
-| `DELETE` | `/api/tasks/{id}`     | Delete task          | Required |
-| `GET`    | `/api/tasks/stats`    | Dashboard stats      | Required |
-
-### Example: Create Task
-```bash
-curl -X POST http://localhost:8080/api/tasks \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "Implement drag and drop",
-    "description": "Use react-dnd for column reordering",
-    "status": "TODO",
-    "priority": "HIGH",
-    "tags": ["Frontend", "Feature"]
-  }'
-```
+| `POST`   | `/api/auth/register`  | Cadastrar usuário    | Não      |
+| `POST`   | `/api/auth/login`     | Login e obter JWT    | Não      |
+| `GET`    | `/api/tasks`          | Listar tarefas       | Sim      |
+| `GET`    | `/api/tasks/{id}`     | Buscar tarefa por ID | Sim      |
+| `POST`   | `/api/tasks`          | Criar tarefa         | Sim      |
+| `PUT`    | `/api/tasks/{id}`     | Atualizar tarefa     | Sim      |
+| `PATCH`  | `/api/tasks/{id}/move`| Mover tarefa         | Sim      |
+| `DELETE` | `/api/tasks/{id}`     | Excluir tarefa       | Sim      |
+| `GET`    | `/api/tasks/stats`    | Estatísticas         | Sim      |
 
 ---
 
-## 🗄️ Database Schema
-
-```sql
-users (id, username, email, password, created_at)
-tasks (id, title, description, status, priority, display_order, user_id, created_at, updated_at)
-task_tags (task_id, tag)
-```
-
----
-
-## 🧪 Testing
-
-```bash
-cd backend
-mvn test
-```
-
----
-
-## 📂 Project Structure
+## 📂 Estrutura do Projeto
 
 ```
 taskflow/
-├── backend/
+├── backend/                    # API Spring Boot
 │   ├── src/main/java/com/taskflow/
-│   │   ├── config/          # Security, JWT, CORS
-│   │   ├── controller/      # REST controllers
-│   │   ├── dto/             # Request/Response DTOs
-│   │   ├── entity/          # JPA entities
-│   │   ├── enums/           # TaskStatus, TaskPriority
-│   │   ├── exception/       # Global error handling
-│   │   ├── repository/      # Spring Data JPA repos
-│   │   └── service/         # Business logic
-│   ├── src/main/resources/
-│   │   ├── application.properties
-│   │   └── application-dev.properties
+│   │   ├── config/             # Security, JWT, CORS
+│   │   ├── controller/         # REST Controllers
+│   │   ├── dto/                # Request/Response DTOs
+│   │   ├── entity/             # JPA Entities
+│   │   ├── enums/              # TaskStatus, TaskPriority
+│   │   ├── exception/          # Global Error Handler
+│   │   ├── repository/         # Spring Data JPA
+│   │   └── service/            # Business Logic
+│   ├── src/test/               # Testes unitários (JUnit 5 + Mockito)
 │   ├── Dockerfile
 │   └── pom.xml
-├── frontend/                # React + Vite
+├── frontend/                   # React + Vite
+│   └── src/
+│       └── App.jsx             # Aplicação completa
+├── electron/                   # App desktop
+│   ├── main.js                 # Processo principal do Electron
+│   └── package.json            # Config do electron-builder
 ├── database/
-│   └── init.sql
+│   └── init.sql                # Schema MySQL
 ├── docker-compose.yml
 └── README.md
 ```
@@ -147,16 +127,50 @@ taskflow/
 
 ## 🛠️ Tech Stack
 
-**Backend:** Java 21, Spring Boot 3.3, Spring Security, Spring Data JPA, JWT (jjwt), Lombok, MapStruct, Springdoc OpenAPI
-
-**Frontend:** React 18, Vite, Tailwind CSS
-
-**Database:** MySQL 8.0, H2 (dev)
-
-**DevOps:** Docker, Docker Compose, GitHub Actions
+| Camada      | Tecnologias                                                    |
+|-------------|----------------------------------------------------------------|
+| **Frontend**  | React 18, Vite, CSS-in-JS, DM Sans, JetBrains Mono          |
+| **Backend**   | Java 21, Spring Boot 3.3, Spring Security, Spring Data JPA   |
+| **Auth**      | JWT (jjwt), BCrypt                                           |
+| **Database**  | MySQL 8.0, H2 (dev)                                         |
+| **Desktop**   | Electron 31, electron-builder                                |
+| **Deploy**    | Vercel (frontend), Docker (backend)                          |
+| **Testes**    | JUnit 5, Mockito                                             |
+| **Docs**      | Springdoc OpenAPI (Swagger UI)                               |
 
 ---
 
-## 📜 License
+## 🐳 Rodando com Docker (backend + MySQL)
 
-MIT — feel free to use this project in your portfolio!
+```bash
+docker compose up -d
+```
+
+- API: http://localhost:8080
+- Swagger: http://localhost:8080/swagger-ui.html
+
+---
+
+## 🖥️ Gerando o instalador .exe
+
+```bash
+cd frontend
+npm run build
+
+cd ../electron
+npm install
+xcopy ..\frontend\dist dist\ /E /I /Y
+npm run build
+```
+
+O instalador estará em `electron/release/TaskFlow Setup 1.0.0.exe`
+
+---
+
+## 📜 Licença
+
+MIT — use à vontade!
+
+---
+
+Feito por [Vynimaciell](https://github.com/Vynimaciell)

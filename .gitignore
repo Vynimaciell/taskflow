@@ -27,3 +27,8 @@ Thumbs.db
 
 # Docker
 mysql_data/
+
+# Electron
+electron/node_modules/
+electron/release/
+electron/dist/
