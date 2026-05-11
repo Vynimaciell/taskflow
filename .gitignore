@@ -32,3 +32,4 @@ mysql_data/
 electron/node_modules/
 electron/release/
 electron/dist/
+application-dev.properties 
